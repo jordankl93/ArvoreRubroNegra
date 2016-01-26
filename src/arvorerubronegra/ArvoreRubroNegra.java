@@ -152,19 +152,19 @@ public class ArvoreRubroNegra<T extends Comparable<T>> implements java.io.Serial
             ObjectInputStream in = new ObjectInputStream(stream);
             
             aux = (NoRubroNegra<T>)in.readObject(); //Primeiro obj sempre será a raiz        
-            while (aux != nil) {
+            while (aux != nil && aux.chave != null) {
                 if (chave.compareTo(aux.chave) < 0) {
                     cont++;
                     conteudo = aux.esquerdo.chave; //Pega o conteudo do filho esquerdo
                     aux = (NoRubroNegra<T>)in.readObject();
-                    while(aux != null && aux.chave != conteudo){
+                    while(aux != nil && aux.chave != conteudo){
                         aux = (NoRubroNegra<T>)in.readObject();      
                     }
                 } else if (chave.compareTo(aux.chave) > 0) {
                     cont++;
                     conteudo = aux.direito.chave; //Pega o conteudo do filho direito
                     aux = (NoRubroNegra<T>)in.readObject();
-                    while(aux != null && aux.chave != conteudo){
+                    while(aux != nil && aux.chave != conteudo){
                         aux = (NoRubroNegra<T>)in.readObject();      
                     }
                 } else if (chave.compareTo(aux.chave) == 0) {
@@ -194,6 +194,7 @@ public class ArvoreRubroNegra<T extends Comparable<T>> implements java.io.Serial
     public void inOrder(NoRubroNegra<T> root, ObjectOutput out) throws IOException {
         NoRubroNegra<T> aux = root;
         if (aux == nil) {
+            out.writeObject(aux);
             return;
         }
         out.writeObject(aux);
@@ -211,6 +212,7 @@ public class ArvoreRubroNegra<T extends Comparable<T>> implements java.io.Serial
             out.close();
             fileStream.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

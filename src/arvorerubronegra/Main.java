@@ -48,8 +48,6 @@ public class Main {
             FileWriter arq = new FileWriter(saida);
             PrintWriter gravarArq = new PrintWriter(arq);
 
-            //gravarArq.println("Hash de Hashes: " + (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) + " bytes de memória");
-
             while (scannerBusca.hasNext()) {
                 gravarArq.println(tree.search(scannerBusca.nextLine()));
             }
@@ -61,6 +59,7 @@ public class Main {
             scannerBusca.close();
             
             File arquivo = new File("arvore.txt");
+            arquivo.createNewFile();
             arquivo.delete();
 
             System.out.println("Tudo ocorreu bem... a principio");
